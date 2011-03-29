@@ -31,13 +31,20 @@ using System.Security.Cryptography;
 using System.Text;
 using Memcached.ClientLibrary;
 using NHibernate.Cache;
+#if NH21
+using log4net;
+#endif
 
 namespace NHibernate.Caches.MemCache
 {
 	public class MemCacheClient : ICache
 	{
 		internal const string PoolName = "nhibernate";
+#if NH21
+        private static readonly ILog log;
+#else
 		private static readonly IInternalLogger log;
+#endif
 		[ThreadStatic] private static HashAlgorithm hasher;
 
 		[ThreadStatic] private static MD5 md5;
@@ -50,7 +57,11 @@ namespace NHibernate.Caches.MemCache
 
 		static MemCacheClient()
 		{
-			log = LoggerProvider.LoggerFor((typeof(MemCacheClient)));
+#if NH21
+            log = LogManager.GetLogger(typeof(MemCacheClient));
+#else
+            log = LoggerProvider.LoggerFor((typeof(MemCacheClient)));
+#endif
 		}
 
 		public MemCacheClient() : this("nhibernate", null) {}

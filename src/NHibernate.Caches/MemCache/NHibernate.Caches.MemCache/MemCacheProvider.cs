@@ -32,6 +32,9 @@ using System.Reflection;
 using System.Text;
 using Memcached.ClientLibrary;
 using NHibernate.Cache;
+#if NH21
+using log4net;
+#endif
 
 namespace NHibernate.Caches.MemCache
 {
@@ -41,7 +44,11 @@ namespace NHibernate.Caches.MemCache
 	/// </summary>
 	public class MemCacheProvider : ICacheProvider
 	{
+#if NH21
+        private static readonly ILog log;
+#else
 		private static readonly IInternalLogger log;
+#endif
 		private static readonly string[] servers;
 		private static readonly int[] weights;
 
@@ -49,7 +56,11 @@ namespace NHibernate.Caches.MemCache
 
 		static MemCacheProvider()
 		{
+#if NH21
+		    log = LogManager.GetLogger(typeof (MemCacheClient));
+#else
 			log = LoggerProvider.LoggerFor((typeof(MemCacheProvider)));
+#endif
 			var configs = ConfigurationManager.GetSection("memcache") as MemCacheConfig[];
 			if (configs != null)
 			{

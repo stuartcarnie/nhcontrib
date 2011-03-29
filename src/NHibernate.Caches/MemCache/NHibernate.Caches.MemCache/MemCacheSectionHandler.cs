@@ -28,6 +28,9 @@ using System;
 using System.Collections;
 using System.Configuration;
 using System.Xml;
+#if NH21
+using log4net;
+#endif
 
 namespace NHibernate.Caches.MemCache
 {
@@ -36,7 +39,11 @@ namespace NHibernate.Caches.MemCache
 	/// </summary>
 	public class MemCacheSectionHandler : IConfigurationSectionHandler
 	{
-		private static readonly IInternalLogger log = LoggerProvider.LoggerFor((typeof(MemCacheSectionHandler)));
+#if NH21
+        private static readonly ILog log = LogManager.GetLogger(typeof(MemCacheSectionHandler));
+#else
+        private static readonly IInternalLogger log = LoggerProvider.LoggerFor((typeof(MemCacheSectionHandler)));
+#endif
 
 		#region IConfigurationSectionHandler Members
 
