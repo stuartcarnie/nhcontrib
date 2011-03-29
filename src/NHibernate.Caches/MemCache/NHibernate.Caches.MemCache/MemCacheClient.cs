@@ -293,7 +293,7 @@ namespace NHibernate.Caches.MemCache
 		/// <returns></returns>
 		private string FullKeyAsString(object key)
 		{
-			return string.Format("{0}{1}@{2}", regionPrefix, region, (key == null ? string.Empty : key.ToString()));
+			return String.Concat(regionPrefix, region, ":", key.ToString(), "@", key.GetHashCode());
 		}
 
 		/// <summary>

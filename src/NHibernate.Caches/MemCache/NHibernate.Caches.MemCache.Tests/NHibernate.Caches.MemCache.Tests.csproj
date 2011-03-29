@@ -127,6 +127,7 @@
     <Compile Include="MemCacheFixture.cs" />
     <Compile Include="MemCacheProviderFixture.cs" />
     <Compile Include="MemCacheSectionHandlerFixture.cs" />
+    <Compile Include="NHCH36\MemCacheClientFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
